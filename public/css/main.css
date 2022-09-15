@@ -1,0 +1,16 @@
+.container {
+  background-color: #d96d3f;
+}
+.container form fieldset {
+  background-color: #df7c52;
+  color: white;
+}
+.container form fieldset legend {
+  color: #ffffff;
+}
+.container form fieldset button {
+  width: 60px;
+  min-height: 30px;
+  background-color: #527BDF;
+  color: white;
+}
