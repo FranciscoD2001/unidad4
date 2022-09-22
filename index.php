@@ -5,9 +5,9 @@
         <!-- CSS only -->
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">    </head>
     <body>
-        <div class="col-sm-6 text-black">
-            <div class="d-flex align-items-center h-custom-2 px-5 ms-xl-4 mt-5 pt-5 pt-xl-0 mt-xl-n5">
-                <form style="width: 23rem;">
+        <div class="row justify-content-md-center">
+            <div class="col-md-3 col-lg-3 col-sm-12" style="padding-top: 15%;">
+                <form method="get" action="products" class="form" style="width: 23rem;">
                     <fieldset>
                         <legend class="fw-normal mb-3 pb-3" style="letter-spacing: 1px;">
                             Datos de accesso
@@ -25,7 +25,7 @@
                         <input type="password" class="form-control form-control-lg" placeholder="*********">
                         </div>        
                         <div class="pt-1 mb-4" style="text-align: center" >
-                        <button type="button" class="btn btn-info btn-lg btn-block">
+                        <button type="submit" class="btn btn-info btn-lg btn-block">
                             Acceder
                         </button> 
                         </div>               
