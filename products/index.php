@@ -84,9 +84,9 @@
               <div class="card-body">
                 <h5 class="card-title">Card title</h5>
                 <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                <a href="#" class="btn btn-primary">Editar</a>
-                <a href="#" class="btn btn-primary">Eliminar</a>
-                <a href="#" class="btn btn-primary">ver detalles</a>
+                <a href="#" class="btn btn-primary" style="background-color: green">Editar</a>
+                <a href="#" class="btn btn-primary" style="background-color: red">Eliminar</a>
+                <a href="#" class="btn btn-primary" style="background-color: #ffa500">ver detalles</a>
               </div>
             </div><?php } ?>
         </div>
