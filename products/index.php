@@ -1,3 +1,9 @@
+<?php 
+        include "../app/ProductController.php";
+        $token = strip_tags($_SESSION["token"]);
+        $productController = new ProductController();
+        $products = $productController->getAllProducts($token);
+?>
 <!DOCTYPE html>
 <html>
 
@@ -6,14 +12,6 @@
 </head>
 
 <body>
-
-<?php 
-        session_start();
-        $token = strip_tags($_SESSION["token"]);
-        include "../app/ProductController.php";
-        $productController = new ProductController();
-        $products = $productController->getAllProducts($token);
-  ?>
 
   <?php include "../layouts/nav.template.php"; ?>
 
@@ -53,19 +51,46 @@
         </div>
         <div class="modal-body">
 
-          <?php for ($i = 0; $i < 6; $i++) : ?>
+            <form action="../app/ProductController.php" method="post" class="FORM">
+              <div class="input-group mb-3">
+                <span class="input-group-text" id="basic-addon1">@</span>
+                <input name="name" type="text" class="form-control" placeholder="Name Product" aria-label="Username" aria-describedby="basic-addon1">
+              </div>
 
-            <div class="input-group mb-3">
-              <span class="input-group-text" id="basic-addon1">@</span>
-              <input type="text" class="form-control" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1">
-            </div>
+              <div class="input-group mb-3">
+                <span class="input-group-text" id="basic-addon1">@</span>
+                <input name="slug" type="text" class="form-control" placeholder="Slug" aria-label="Username" aria-describedby="basic-addon1">
+              </div>
 
-          <?php endfor; ?>
+              <div class="input-group mb-3">
+                <span class="input-group-text" id="basic-addon1">@</span>
+                <input name="description" type="text" class="form-control" placeholder="Description" aria-label="Username" aria-describedby="basic-addon1">
+              </div>
+
+              <div class="input-group mb-3">
+                <span class="input-group-text" id="basic-addon1">@</span>
+                <input name="features" type="text" class="form-control" placeholder="Features" aria-label="Username" aria-describedby="basic-addon1">
+              </div>
+
+              <div class="input-group mb-3">
+                <span class="input-group-text" id="basic-addon1">@</span>
+                <input name="brand_id" type="text" class="form-control" placeholder="id" aria-label="Username" aria-describedby="basic-addon1">
+              </div>
+
+              <input type="hidden" name="action" value="create">
+              <button type="submit"  class="btn btn-primary">Save changes</button>
+            </form>
+
+            
+
 
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-primary">Save changes</button>
+          <button type="submit" class="btn btn-primary">Save changes</button>
+
+            <input type="hidden" name="action" value="create">
+
         </div>
       </div>
     </div>
