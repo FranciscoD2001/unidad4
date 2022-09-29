@@ -7,6 +7,14 @@
 
 <body>
 
+<?php 
+        session_start();
+        $token = strip_tags($_SESSION["token"]);
+        include "../app/ProductController.php";
+        $productController = new ProductController();
+        $products = $productController->getAllProducts($token);
+  ?>
+
   <?php include "../layouts/nav.template.php"; ?>
 
   <div class="container-fluid">
@@ -19,12 +27,12 @@
       <div class="col-10">
         <div class="row">
           <a href="#" data-bs-toggle="modal" data-bs-target="#createProductModal" class="btn btn-primary" style="background-color: green">Añadir producto</a>
-          <?php for ($i = 0; $i < 12; $i++) { ?>
+          <?php foreach($products as $product) { ?>
             <div class="card col-3">
-              <img class="card-img-top" src="https://media.sofa.com/thumbor/unsafe/fit-in/440x220/center/middle/https%3A%2F%2Fmedia.sofa.com%2Fmedias%2F%3Fcontext%3DbWFzdGVyfHJvb3R8MTUyNDc3N3xpbWFnZS9qcGVnfGg1ZS9oZjAvODk2ODE1MTYyOTg1NC5qcGd8ZTA5YWU3M2Q3ZmQzYWE3MDM1NDJkYjQ5NzYzMWI1N2U5ZTljM2YzYTliMTBmNTg4NWE3MmVkZWZlM2MwYTU1NQ" alt="Card image cap">
+              <img class="card-img-top" src="<?php echo $product["cover"]?>" alt="Card image cap">
               <div class="card-body">
-                <h5 class="card-title">Card title</h5>
-                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                <h5 class="card-title"><?php echo $product["name"]?></h5>
+                <p class="card-text"><?php echo $product["description"]?></p>
                 <a href="#" data-bs-toggle="modal" data-bs-target="#createProductModal" class="btn btn-primary" style="background-color: green">Editar</a>
                 <a onclick="remove(this)" href="#" class="btn btn-primary" style="background-color: red">Eliminar</a>
                 <a href="details.php" data-bs-target="#createProductModal" class="btn btn-primary" style="background-color: #ffa500">ver detalles</a>
