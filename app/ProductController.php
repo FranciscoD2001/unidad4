@@ -8,9 +8,10 @@ if (isset($_POST['action'])) {
             $description = strip_tags($_POST['description']);
             $features = strip_tags($_POST['features']);
             $brand_id = strip_tags($_POST['brand_id']);
+            $cover = $_FILES["cover"]["tmp_name"];
 
             $productController = new ProductController();
-            $productController->createProduct($name, $slug, $description, $features, $brand_id);
+            $productController->createProduct($name, $slug, $description, $features, $brand_id, $cover);
             break;
     }
 }
@@ -43,7 +44,7 @@ class ProductController
         return $response["data"];
     }
 
-    public function createProduct($name, $slug, $description, $features, $brand_id)
+    public function createProduct($name, $slug, $description, $features, $brand_id, $cover)
     {
         $curl = curl_init();
 
@@ -59,7 +60,7 @@ class ProductController
             CURLOPT_HTTPHEADER => array(
                 'Authorization: Bearer ' . $_SESSION['token']
             ),
-            CURLOPT_POSTFIELDS => array('name' => $name, 'slug' => $slug, 'description' => $description, 'features' => $features, 'brand_id' => $brand_id)
+            CURLOPT_POSTFIELDS => array('name' => $name, 'slug' => $slug, 'description' => $description, 'features' => $features, 'brand_id' => $brand_id, 'cover'=> new CURLFILE($cover))
         ));
 
         $response = curl_exec($curl);

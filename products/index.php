@@ -51,7 +51,7 @@
         </div>
         <div class="modal-body">
 
-            <form action="../app/ProductController.php" method="post" class="FORM">
+            <form enctype="multipart/form-data" action="../app/ProductController.php" method="post" class="FORM">
               <div class="input-group mb-3">
                 <span class="input-group-text" id="basic-addon1">@</span>
                 <input name="name" type="text" class="form-control" placeholder="Name Product" aria-label="Username" aria-describedby="basic-addon1">
@@ -77,20 +77,14 @@
                 <input name="brand_id" type="text" class="form-control" placeholder="id" aria-label="Username" aria-describedby="basic-addon1">
               </div>
 
+              <div class="input-group mb-3">
+                <label for="formFile" class="form-label">Default file input example</label>
+                <input name="cover" type="file" class="form-control">
+              </div>
+
               <input type="hidden" name="action" value="create">
-              <button type="submit"  class="btn btn-primary">Save changes</button>
+              <button type="submit" class="btn btn-primary">Save changes</button>
             </form>
-
-            
-
-
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-          <button type="submit" class="btn btn-primary">Save changes</button>
-
-            <input type="hidden" name="action" value="create">
-
         </div>
       </div>
     </div>
