@@ -1,9 +1,14 @@
 <?php
 session_start();
+$slug;
 
-
+if(isset($_GET["slug"])){
+    $slug = $_GET["slug"];
+    
+}
 
 if (isset($_POST['action'])) {
+    $productController = new ProductController();
     switch ($_POST['action']) {
         case 'create':
             $name = strip_tags($_POST['name']);
@@ -13,7 +18,6 @@ if (isset($_POST['action'])) {
             $brand_id = strip_tags($_POST['brand_id']);
             $cover = $_FILES["cover"]["tmp_name"];
 
-            $productController = new ProductController();
             $productController->createProduct($name, $slug, $description, $features, $brand_id, $cover);
             break;
     }
@@ -106,6 +110,39 @@ class ProductController
             header("Location:../products/?success");
         } else {
             header("Location:../?error_true");
+        }
+    }
+
+    public function getProductDetail($slug)
+    {
+        $curl = curl_init();
+
+        curl_setopt_array($curl, array(
+            CURLOPT_URL => 'http://crud.jonathansoto.mx/api/products/slug/' . $slug,
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => '',
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 0,
+            CURLOPT_FOLLOWLOCATION => true,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => 'GET',
+            CURLOPT_HTTPHEADER => array(
+                'Authorization: Bearer ' . $_SESSION['token']
+            )
+        ));
+
+        $response = curl_exec($curl);
+
+        curl_close($curl);
+        
+        $response = json_decode($response);
+
+        // echo $response;
+
+        if (isset($response->code) && $response->code > 0) {
+            return $response->data;
+        } else {
+            return [];
         }
     }
 }

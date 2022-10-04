@@ -36,7 +36,7 @@ $arrayBrands = $productController->getAllBrands($token);
                 <p class="card-text"><?php echo $product->description ?></p>
                 <a href="#" data-bs-toggle="modal" data-bs-target="#createProductModal" class="btn btn-primary" style="background-color: green">Editar</a>
                 <a onclick="remove(this)" href="#" class="btn btn-primary" style="background-color: red">Eliminar</a>
-                <a href="details.php" data-bs-target="#createProductModal" class="btn btn-primary" style="background-color: #ffa500">ver detalles</a>
+                <a href="details.php?slug=<?php echo $product->slug ?>" data-bs-target="#createProductModal" class="btn btn-primary" style="background-color: #ffa500">ver detalles</a>
               </div>
             </div><?php } ?>
         </div>
