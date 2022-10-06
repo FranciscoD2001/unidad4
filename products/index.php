@@ -26,7 +26,7 @@ $arrayBrands = $productController->getAllBrands($token);
       <!-- CONTENIDO -->
       <div class="col-10">
         <div class="row">
-          <a href="#" data-bs-toggle="modal" data-bs-target="#createProductModal" class="btn btn-primary" style="background-color: green">Añadir producto</a>
+          <a onclick="addProduct()" href="#" data-bs-toggle="modal" data-bs-target="#createProductModal" class="btn btn-primary" style="background-color: green">Añadir producto</a>
           <?php foreach ($products as $product) { ?>
             <div class="card col-3">
               <img class="card-img-top" src="<?php echo $product->cover ?>" alt="Card image cap">
@@ -34,8 +34,8 @@ $arrayBrands = $productController->getAllBrands($token);
                 <h5 class="card-title"><?php echo $product->name ?></h5>
                 <p class="card-text"><?php echo $product->brand->name ?></p>
                 <p class="card-text"><?php echo $product->description ?></p>
-                <a href="#" data-bs-toggle="modal" data-bs-target="#createProductModal" class="btn btn-primary" style="background-color: green">Editar</a>
-                <a onclick="remove(this)" href="#" class="btn btn-primary" style="background-color: red">Eliminar</a>
+                <button data-product='<?php echo json_encode($product);?>' onclick="editProduct(this)" href="#" data-bs-toggle="modal" data-bs-target="#createProductModal" class="btn btn-primary">Editar</button>
+                <a onclick="remove(<?php echo $product->id ?>)" href="#" class="btn btn-primary" style="background-color: red">Eliminar</a>
                 <a href="details.php?slug=<?php echo $product->slug ?>" data-bs-target="#createProductModal" class="btn btn-primary" style="background-color: #ffa500">ver detalles</a>
               </div>
             </div><?php } ?>
@@ -57,22 +57,22 @@ $arrayBrands = $productController->getAllBrands($token);
           <form enctype="multipart/form-data" action="../app/ProductController.php" method="post" class="FORM">
             <div class="input-group mb-3">
               <span class="input-group-text" id="basic-addon1">@</span>
-              <input name="name" type="text" class="form-control" placeholder="Name Product" aria-label="Username" aria-describedby="basic-addon1">
+              <input id="name" name="name" type="text" class="form-control" placeholder="Name Product" aria-label="Username" aria-describedby="basic-addon1">
             </div>
 
             <div class="input-group mb-3">
               <span class="input-group-text" id="basic-addon1">@</span>
-              <input name="slug" type="text" class="form-control" placeholder="Slug" aria-label="Username" aria-describedby="basic-addon1">
+              <input id="slug" name="slug" type="text" class="form-control" placeholder="Slug" aria-label="Username" aria-describedby="basic-addon1">
             </div>
 
             <div class="input-group mb-3">
               <span class="input-group-text" id="basic-addon1">@</span>
-              <input name="description" type="text" class="form-control" placeholder="Description" aria-label="Username" aria-describedby="basic-addon1">
+              <input id="description" name="description" type="text" class="form-control" placeholder="Description" aria-label="Username" aria-describedby="basic-addon1">
             </div>
 
             <div class="input-group mb-3">
               <span class="input-group-text" id="basic-addon1">@</span>
-              <input name="features" type="text" class="form-control" placeholder="Features" aria-label="Username" aria-describedby="basic-addon1">
+              <input id="features" name="features" type="text" class="form-control" placeholder="Features" aria-label="Username" aria-describedby="basic-addon1">
             </div>
 
             <div class="input-group mb-3">
@@ -93,10 +93,12 @@ $arrayBrands = $productController->getAllBrands($token);
               <input name="cover" type="file" class="form-control">
             </div>
 
-            <input type="hidden" name="action" value="create">
+
             <button type="submit" class="btn btn-primary">Save changes</button>
           </form>
         </div>
+        <input id="inputOculto" type="hidden" name="action" value="create">
+      <input id="id" type="hidden" name="id">
       </div>
     </div>
   </div>
@@ -104,7 +106,7 @@ $arrayBrands = $productController->getAllBrands($token);
   <?php include "../layouts/scripts.template.php"; ?>
 
   <script type="text/javascript">
-    function remove(target) {
+    function remove(id) {
       swal({
           title: "Are you sure?",
           text: "Once deleted, you will not be able to recover this imaginary file!",
@@ -117,10 +119,44 @@ $arrayBrands = $productController->getAllBrands($token);
             swal("Poof! Your imaginary file has been deleted!", {
               icon: "success",
             });
+            var bodyFormData = new FormData();
+            bodyFormData.append('id', id);
+            bodyFormData.append('action', 'delete');
+
+            axios.post('../app/productController.php', bodyFormData)
+              .then(function(response) {
+                console.log(response);
+              })
+              .catch(function(error) {
+                console.log('error')
+              })
+
           } else {
             swal("Your imaginary file is safe!");
           }
         });
+    }
+
+    function addProduct() {
+      const elem = document.getElementById('inputOculto').value = 'create';
+      document.getElementById("name").value = "";
+      document.getElementById("slug").value = "";
+      document.getElementById("description").value = "";
+      document.getElementById("features").value = "";
+      document.getElementById("brand_id").value = "";
+
+    }
+
+    function editProduct(target) {
+      const elem = document.getElementById('inputOculto').value = 'edit';
+      let product = JSON.parse(target.getAttribute('data-product'));
+
+      document.getElementById("name").value = product.name;
+      document.getElementById("slug").value = product.slug;
+      document.getElementById("description").value = product.description;
+      document.getElementById("features").value = product.features;
+      document.getElementById("brand_id").value = product.brand_id;
+      document.getElementById("id").value = product.id;
     }
   </script>
 
