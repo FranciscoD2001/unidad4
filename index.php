@@ -1,3 +1,6 @@
+<?php
+    include_once "app/config.php";
+?>
 <!DOCTYPE html>
 <html>
     <head>
@@ -7,7 +10,7 @@
     <body>
         <div class="row justify-content-md-center">
             <div class="col-md-3 col-lg-3 col-sm-12" style="padding-top: 15%;">
-                <form method="post" action="app/AuthController.php" class="form" style="width: 23rem;">
+                <form method="post" action="auth" class="form" style="width: 23rem;">
                     <fieldset>
                         <legend class="fw-normal mb-3 pb-3" style="letter-spacing: 1px;">
                             Datos de accesso
@@ -26,6 +29,7 @@
                         </div>        
                         <div class="pt-1 mb-4" style="text-align: center" >
                         <input type="hidden" name="action" value="access">
+                        <input type="hidden" name="global_token" value="<?php echo $_SESSION['global_token'] ?>">
                         <button type="submit" class="btn btn-info btn-lg btn-block">
                             Acceder
                         </button> 

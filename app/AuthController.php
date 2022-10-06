@@ -1,19 +1,26 @@
 <?php
+include_once "config.php";
+
 if (isset($_POST['action'])){
-    switch($_POST['action']){
-        case 'access':
+    if(isset($_POST['global_token']) && $_POST['global_token'] == $_SESSION['global_token']){
 
-            $authController = new AuthController();
+        switch($_POST['action']){
 
-            $email = strip_tags($_POST['email']);
-            $password = strip_tags($_POST['password']);
-
-            $authController->login($email,$password);
-
-            var_dump($email);
-
-            break;
+            case 'access':
+    
+                $authController = new AuthController();
+    
+                $email = strip_tags($_POST['email']);
+                $password = strip_tags($_POST['password']);
+    
+                $authController->login($email,$password);
+    
+                var_dump($email);
+    
+                break;
+        }
     }
+    
 }
 Class AuthController{
 
@@ -45,7 +52,7 @@ Class AuthController{
             $_SESSION['name']= $response->data->name;
             $_SESSION['lastname'] = $response->data->lastname;
             $_SESSION['avatar'] = $response->data->avatar;
-            $_SESSION['token'] = $response->data->token;
+            $_SESSION['global_token'] = $response->data->token;
 
             header("Location:../products/");
         }else{

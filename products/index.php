@@ -1,6 +1,6 @@
 <?php
 include "../app/ProductController.php";
-$token = strip_tags($_SESSION["token"]);
+$token = strip_tags($_SESSION["global_token"]);
 $productController = new ProductController();
 $products = $productController->getAllProducts($token);
 $arrayBrands = $productController->getAllBrands($token);
@@ -34,7 +34,7 @@ $arrayBrands = $productController->getAllBrands($token);
                 <h5 class="card-title"><?php echo $product->name ?></h5>
                 <p class="card-text"><?php echo $product->brand->name ?></p>
                 <p class="card-text"><?php echo $product->description ?></p>
-                <button data-product='<?php echo json_encode($product);?>' onclick="editProduct(this)" href="#" data-bs-toggle="modal" data-bs-target="#createProductModal" class="btn btn-primary">Editar</button>
+                <button data-product='<?php echo json_encode($product); ?>' onclick="editProduct(this)" href="#" data-bs-toggle="modal" data-bs-target="#createProductModal" class="btn btn-primary">Editar</button>
                 <a onclick="remove(<?php echo $product->id ?>)" href="#" class="btn btn-primary" style="background-color: red">Eliminar</a>
                 <a href="details.php?slug=<?php echo $product->slug ?>" data-bs-target="#createProductModal" class="btn btn-primary" style="background-color: #ffa500">ver detalles</a>
               </div>
@@ -95,10 +95,11 @@ $arrayBrands = $productController->getAllBrands($token);
 
 
             <button type="submit" class="btn btn-primary">Save changes</button>
+            <input id="inputOculto" type="hidden" name="action" value="create">
+            <input id="id" type="hidden" name="id">
           </form>
         </div>
-        <input id="inputOculto" type="hidden" name="action" value="create">
-      <input id="id" type="hidden" name="id">
+
       </div>
     </div>
   </div>

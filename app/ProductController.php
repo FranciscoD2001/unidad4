@@ -1,5 +1,5 @@
 <?php
-session_start();
+include_once "config.php";
 $slug;
 
 if (isset($_GET["slug"])) {
@@ -183,7 +183,7 @@ class ProductController
             CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
             CURLOPT_CUSTOMREQUEST => 'DELETE',
             CURLOPT_HTTPHEADER => array(
-                'Authorization: Bearer ' . $_SESSION['token'],
+                'Authorization: Bearer ' . $_SESSION['token']
             ),
         ));
 
