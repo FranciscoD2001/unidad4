@@ -37,7 +37,7 @@ $arrayBrands = $productController->getAllBrands($token);
                 <p class="card-text"><?php echo $product->description ?></p>
                 <button data-product='<?php echo json_encode($product); ?>' onclick="editProduct(this)" href="#" data-bs-toggle="modal" data-bs-target="#createProductModal" class="btn btn-primary">Editar</button>
                 <a onclick="remove(<?php echo $product->id ?>)" href="#" class="btn btn-primary" style="background-color: red">Eliminar</a>
-                <a href="details.php?slug=<?php echo $product->slug ?>" data-bs-target="#createProductModal" class="btn btn-primary" style="background-color: #ffa500">ver detalles</a>
+                <a href="<?= BASE_PATH."product/".$product->slug ?>" data-bs-target="#createProductModal" class="btn btn-primary" style="background-color: #ffa500">ver detalles</a>
               </div>
             </div><?php } ?>
         </div>
@@ -55,7 +55,7 @@ $arrayBrands = $productController->getAllBrands($token);
         </div>
         <div class="modal-body">
 
-          <form enctype="multipart/form-data" action="../app/ProductController.php" method="post" class="FORM">
+          <form enctype="multipart/form-data" action="<?= BASE_PATH?>prod" method="post" class="FORM">
             <div class="input-group mb-3">
               <span class="input-group-text" id="basic-addon1">@</span>
               <input id="name" name="name" type="text" class="form-control" placeholder="Name Product" aria-label="Username" aria-describedby="basic-addon1">
@@ -127,7 +127,7 @@ $arrayBrands = $productController->getAllBrands($token);
             bodyFormData.append('action', 'delete');
             bodyFormData.append("global_token", '<?= $_SESSION['global_token']?>');
 
-            axios.post('../app/productController.php', bodyFormData)
+            axios.post('<?= BASE_PATH?>prod', bodyFormData)
               .then(function(response) {
                 console.log(response);
               })
