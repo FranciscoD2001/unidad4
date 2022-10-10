@@ -1,44 +1,46 @@
 <?php
 include_once "config.php";
 $slug;
-
-if (isset($_GET["slug"])) {
-    $slug = $_GET["slug"];
+if (isset($_POST['global_token']) && ($_POST['global_token'] == $_SESSION['global_token'])){
+    if (isset($_GET["slug"])) {
+        $slug = $_GET["slug"];
+    }
 }
 
 if (isset($_POST['action'])) {
-    $productController = new ProductController();
-    switch ($_POST['action']) {
-        case 'create':
-            $name = strip_tags($_POST['name']);
-            $slug = strip_tags($_POST['slug']);
-            $description = strip_tags($_POST['description']);
-            $features = strip_tags($_POST['features']);
-            $brand_id = strip_tags($_POST['brand_id']);
-            $cover = $_FILES["cover"]["tmp_name"];
-
-            $productController->createProduct($name, $slug, $description, $features, $brand_id, $cover);
-            break;
-
-        case 'edit':
-            $name = strip_tags($_POST['name']);
-            $slug = strip_tags($_POST['slug']);
-            $description = strip_tags($_POST['description']);
-            $features = strip_tags($_POST['features']);
-            $brand_id = strip_tags($_POST['brand_id']);
-            $id = strip_tags($_POST['id']);
-
-            $productController = new productController();
-            $productController->editProducts($name, $slug, $description, $features, $brand_id, $id);
-            break;
-
-        case 'delete':
-            $id = $_POST['id'];
-
-            $productController = new productController();
-            $productController->deleteProducts($id);
-            break;
-    }
+    if (isset($_POST['global_token']) && ($_POST['global_token'] == $_SESSION['global_token'])){
+        switch ($_POST['action']) {
+            case 'create':
+                $name = strip_tags($_POST['name']);
+                $slug = strip_tags($_POST['slug']);
+                $description = strip_tags($_POST['description']);
+                $features = strip_tags($_POST['features']);
+                $brand_id = strip_tags($_POST['brand_id']);
+                $cover = $_FILES["cover"]["tmp_name"];
+    
+                $productController->createProduct($name, $slug, $description, $features, $brand_id, $cover);
+                break;
+    
+            case 'edit':
+                $name = strip_tags($_POST['name']);
+                $slug = strip_tags($_POST['slug']);
+                $description = strip_tags($_POST['description']);
+                $features = strip_tags($_POST['features']);
+                $brand_id = strip_tags($_POST['brand_id']);
+                $id = strip_tags($_POST['id']);
+    
+                $productController = new productController();
+                $productController->editProducts($name, $slug, $description, $features, $brand_id, $id);
+                break;
+    
+            case 'delete':
+                $id = $_POST['id'];
+    
+                $productController = new productController();
+                $productController->deleteProducts($id);
+                break;
+        }
+    } 
 }
 
 class ProductController
@@ -113,7 +115,7 @@ class ProductController
             CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
             CURLOPT_CUSTOMREQUEST => 'POST',
             CURLOPT_HTTPHEADER => array(
-                'Authorization: Bearer ' . $_SESSION['token']
+                'Authorization: Bearer ' . $_SESSION['global_token']
             ),
             CURLOPT_POSTFIELDS => array('name' => $name, 'slug' => $slug, 'description' => $description, 'features' => $features, 'brand_id' => $brand_id, 'cover' => new CURLFILE($cover))
         ));
@@ -152,7 +154,7 @@ class ProductController
             &brand_id='.$brand_id.'
             &id=' . $id,
             CURLOPT_HTTPHEADER => array(
-                'Authorization: Bearer ' . $_SESSION['token'],
+                'Authorization: Bearer ' . $_SESSION['global_token'],
                 'Content-Type: application/x-www-form-urlencoded'
             ),
         ));
@@ -183,7 +185,7 @@ class ProductController
             CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
             CURLOPT_CUSTOMREQUEST => 'DELETE',
             CURLOPT_HTTPHEADER => array(
-                'Authorization: Bearer ' . $_SESSION['token']
+                'Authorization: Bearer ' . $_SESSION['global_token']
             ),
         ));
 
@@ -211,7 +213,7 @@ class ProductController
             CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
             CURLOPT_CUSTOMREQUEST => 'GET',
             CURLOPT_HTTPHEADER => array(
-                'Authorization: Bearer ' . $_SESSION['token']
+                'Authorization: Bearer ' . $_SESSION['global_token']
             )
         ));
 

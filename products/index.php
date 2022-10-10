@@ -1,4 +1,5 @@
 <?php
+include_once "../app/config.php";
 include "../app/ProductController.php";
 $token = strip_tags($_SESSION["global_token"]);
 $productController = new ProductController();
@@ -97,6 +98,7 @@ $arrayBrands = $productController->getAllBrands($token);
             <button type="submit" class="btn btn-primary">Save changes</button>
             <input id="inputOculto" type="hidden" name="action" value="create">
             <input id="id" type="hidden" name="id">
+            <input type="hidden" name="global_token" value="<?= $_SESSION['global_token']?>">
           </form>
         </div>
 
@@ -123,6 +125,7 @@ $arrayBrands = $productController->getAllBrands($token);
             var bodyFormData = new FormData();
             bodyFormData.append('id', id);
             bodyFormData.append('action', 'delete');
+            bodyFormData.append("global_token", '<?= $_SESSION['global_token']?>');
 
             axios.post('../app/productController.php', bodyFormData)
               .then(function(response) {

@@ -1,4 +1,5 @@
 <?php
+include_once "../app/config.php";
 include "../app/ProductController.php";
 $productController = new ProductController();
 $product = $productController->getProductDetail($_GET['slug']);

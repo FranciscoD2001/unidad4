@@ -10,7 +10,7 @@
     <body>
         <div class="row justify-content-md-center">
             <div class="col-md-3 col-lg-3 col-sm-12" style="padding-top: 15%;">
-                <form method="post" action="auth" class="form" style="width: 23rem;">
+                <form method="post" action="<?= BASE_PATH ?>auth" class="form" style="width: 23rem;">
                     <fieldset>
                         <legend class="fw-normal mb-3 pb-3" style="letter-spacing: 1px;">
                             Datos de accesso

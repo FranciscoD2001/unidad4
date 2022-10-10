@@ -54,7 +54,7 @@ Class AuthController{
             $_SESSION['avatar'] = $response->data->avatar;
             $_SESSION['global_token'] = $response->data->token;
 
-            header("Location:../products/");
+            header("Location:".BASE_PATH."products");
         }else{
             header("Location:../?error_true");
         }
